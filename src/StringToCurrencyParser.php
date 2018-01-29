@@ -5,42 +5,6 @@ namespace Vistag\PriceParser;
 
 class StringToCurrencyParser
 {
-    protected $currencyTable = [
-        'USD' => [
-            'usd',
-            'dollar',
-            '$',
-            '&#36;',
-            '&#65129;',
-            '&#65284;',
-            '&#128178;',
-        ],
-        'GBP' => [
-            'gbp',
-            'pound',
-            'libra',
-            '£',
-            '&pound;',
-            '&#163;',
-        ],
-        'EUR' => [
-            'eur',
-            'euro',
-            '€',
-            '&euro;',
-            '&#8364;',
-        ],
-        'CZK' => [
-            'czk',
-            'crown',
-            'czech',
-            'korun',
-            'koruna',
-            'kc',
-            'kč',
-        ],
-    ];
-
     protected $lookUpTable = [];
 
     protected $input;
@@ -53,7 +17,9 @@ class StringToCurrencyParser
 
     protected function buildLookUpTable()
     {
-        foreach ($this->currencyTable as $currencyCode=>$strings) {
+        $currencies = json_decode(file_get_contents(__DIR__ . '/currencies.json'), true);
+        
+        foreach ($currencies as $currencyCode=>$strings) {
             foreach ($strings as $string) {
                 $this->lookUpTable[strtolower($string)] = $currencyCode;
             }
