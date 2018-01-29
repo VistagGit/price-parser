@@ -1,0 +1,41 @@
+{
+    "name": "vistag/price-parser",
+    "description": "Parse string and return separated price and currency",
+    "type": "library",
+    "keywords": ["price", "currency", "parser"],
+    "homepage": "https://github.com/VistagGit/price-parser",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pavel Rorecek",
+            "email": "pavel@rorecek.com",
+            "homepage": "https://laravelist.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/VistagGit/price-parser/issues",
+        "source": "https://github.com/VistagGit/price-parser"
+    },
+    "require": {
+        "php": "^5.4 || ^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7|^5.0",
+        "jakub-onderka/php-parallel-lint": "^0.9.0"
+    },
+    "autoload": {
+        "psr-4": {"Vistag\\PriceParser\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Vistag\\PriceParser\\Test\\": "tests/"}
+    },
+    "scripts": {
+        "lint": "parallel-lint src tests",
+        "phpunit": "phpunit --verbose --colors=always",
+        "test": [
+            "@lint",
+            "@phpunit"
+        ]
+    },
+    "minimum-stability": "dev"
+}
