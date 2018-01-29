@@ -29,6 +29,22 @@ $priceParser->getPrice();
 // 1210000.1
 $priceParser->getCurrency();
 // USD
+
+
+$priceParser = new PriceParser('foobar');
+
+$priceParser->isValid();
+// false
+
+
+$priceParser = new PriceParser('12312');
+
+$priceParser->isValid();
+// true
+$priceParser->getPrice();
+// 12312
+$priceParser->getCurrency();
+// null
 ```
 
 ## Support
