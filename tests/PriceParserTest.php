@@ -48,4 +48,35 @@ final class PriceParserTest extends TestCase
             '$ 1,210,000'   => ['$ 1,210,000', 'USD', 1210000],
         ];
     }
+
+    /**
+     * @dataProvider additionFormatProvider
+     */
+    public function testCurrencyFormatter($input, $result)
+    {
+        $extractor = new PriceParser($input);
+        $this->assertEquals($result, $extractor->getFormatted());
+
+    }
+
+    public function additionFormatProvider()
+    {
+        return [
+            '1000 CZK'    => ['1000 CZK', '1000 Kč'],
+            '100.5 CZK'    => ['100.5 CZK', '100,50 Kč'],
+            '0.99 CZK'    => ['0.99 CZK', '0,99 Kč'],
+
+            '1000 EUR'    => ['1000 EUR', '1000 €'],
+            '100.5 EUR'    => ['100.5 EUR', '100,50 €'],
+            '0.99 EUR'    => ['0.99 EUR', '0,99 €'],
+
+            '1000 GBP'    => ['1000 GBP', '£1000'],
+            '100.5 GBP'    => ['100.5 GBP', '£100.50'],
+            '0.99 GBP'    => ['0.99 GBP', '£0.99'],
+
+            '1000 USD'    => ['1000 USD', '$1000'],
+            '100.5 USD'    => ['100.5 USD', '$100.50'],
+            '0.99 USD'    => ['0.99 USD', '$0.99'],
+        ];
+    }
 }

@@ -33,6 +33,28 @@ class PriceParser
         return ! empty($this->price);
     }
 
+    public function getFormatted()
+    {
+        $value = $this->getPrice() ?? 0;
+        $decimals = (floor($value) == $value) ? 0 : 2;
+        
+        switch($this->getCurrency()) {
+            case 'USD':
+                $price = '$' . number_format($value, $decimals, '.', '');
+                break;
+            case 'GBP':
+                $price = '£' . number_format($value, $decimals, '.', '');
+                break;
+            case 'CZK':
+                $price = number_format($value, $decimals, ',', '') . ' Kč';
+                break;
+            default:
+                $price = number_format($value, $decimals, ',', '') . ' €';
+        }
+
+        return $price;
+    }
+
     protected function parsePrice($value)
     {
         // Keep numbers and delimiters only
