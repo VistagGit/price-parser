@@ -11,7 +11,7 @@ class StringToCurrencyParser
 
     public function __construct($input = null)
     {
-        $this->input = strtolower($input);
+        $this->input = mb_strtolower($input, 'UTF-8');
         $this->buildLookUpTable();
     }
 
@@ -21,14 +21,14 @@ class StringToCurrencyParser
         
         foreach ($currencies as $currencyCode=>$strings) {
             foreach ($strings as $string) {
-                $this->lookUpTable[strtolower($string)] = $currencyCode;
+                $this->lookUpTable[mb_strtolower($string)] = $currencyCode;
             }
         }
     }
 
     public function price($input = null)
     {
-        $this->input = strtolower($input);
+        $this->input = mb_strtolower($input, 'UTF-8');
     }
 
     public function get()
@@ -42,10 +42,25 @@ class StringToCurrencyParser
 
     protected function parseCurrency($value)
     {
+        $value = str_replace(chr(194).chr(160), ' ', $value);
         $value = str_replace(range(0, 9), ' ', $value);
         $value = str_replace([',', '.'], ' ', $value);
+        // $value = str_replace('kč', 'kc', $value);
+        // $value = str_replace('Kč', 'kc', $value);
+        // $value = str_replace('$', '&dollar;', $value);
+        // $value = str_replace('£', '&pound;', $value);
+        // $value = str_replace('€', '&euro;', $value);
+
+        // echo "Start:" . $value . ':';
+        // print_r(unpack('C*', $value));
+        // $value = iconv("UTF-8", "ASCII", $value);
         $value = trim($value);
         $value = preg_replace('/\s+/', ' ', $value);
+        // print_r(unpack('C*', $value));
+        // echo $value . ":end\n";
+
+        // echo "$value\n";
+        // $value = utf8_encode($value);
 
         return empty($value) ? null : $this->matchCurrency($value);
     }
@@ -55,6 +70,8 @@ class StringToCurrencyParser
         $values = explode(' ', $value);
 
         foreach ($values as $currency) {
+            // echo $currency;
+            // $currency = htmlentities($currency);
             if (isset($this->lookUpTable[$currency])) {
                 return $this->lookUpTable[$currency];
             }
