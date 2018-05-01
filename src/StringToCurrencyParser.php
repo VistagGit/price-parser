@@ -45,22 +45,8 @@ class StringToCurrencyParser
         $value = str_replace(chr(194).chr(160), ' ', $value);
         $value = str_replace(range(0, 9), ' ', $value);
         $value = str_replace([',', '.'], ' ', $value);
-        // $value = str_replace('kč', 'kc', $value);
-        // $value = str_replace('Kč', 'kc', $value);
-        // $value = str_replace('$', '&dollar;', $value);
-        // $value = str_replace('£', '&pound;', $value);
-        // $value = str_replace('€', '&euro;', $value);
-
-        // echo "Start:" . $value . ':';
-        // print_r(unpack('C*', $value));
-        // $value = iconv("UTF-8", "ASCII", $value);
         $value = trim($value);
         $value = preg_replace('/\s+/', ' ', $value);
-        // print_r(unpack('C*', $value));
-        // echo $value . ":end\n";
-
-        // echo "$value\n";
-        // $value = utf8_encode($value);
 
         return empty($value) ? null : $this->matchCurrency($value);
     }
@@ -70,8 +56,6 @@ class StringToCurrencyParser
         $values = explode(' ', $value);
 
         foreach ($values as $currency) {
-            // echo $currency;
-            // $currency = htmlentities($currency);
             if (isset($this->lookUpTable[$currency])) {
                 return $this->lookUpTable[$currency];
             }

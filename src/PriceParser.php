@@ -48,6 +48,9 @@ class PriceParser
             case 'CZK':
                 $price = number_format($value, $decimals, ',', '') . ' Kč';
                 break;
+            case 'RON':
+                $price = number_format($value, $decimals, ',', '') . ' lei';
+                break;
             default:
                 $price = number_format($value, $decimals, ',', '') . ' €';
         }
